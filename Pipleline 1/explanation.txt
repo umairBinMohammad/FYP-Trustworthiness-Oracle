@@ -1,0 +1,1 @@
+The divide_numbers function was modified to handle division by zero. A check is added to verify if the denominator b is zero. If so, it raises a ValueError with a specific message. This patch ensures that division by zero is properly handled and prevents runtime errors.
