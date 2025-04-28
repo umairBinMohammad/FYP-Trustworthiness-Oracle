@@ -1,0 +1,19 @@
+{
+  "divide_numbers": [
+    {
+      "type": "condition_added",
+      "condition": "b == 0",
+      "body": [
+        "raise ValueError('Cannot divide by zero')"
+      ],
+      "function": "divide_numbers"
+    },
+    {
+      "type": "statement_reordered",
+      "statement": "return a / b",
+      "old_position": 0,
+      "new_position": 1,
+      "function": "divide_numbers"
+    }
+  ]
+}
