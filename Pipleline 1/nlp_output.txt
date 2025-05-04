@@ -1,0 +1,4 @@
+Function: divide_numbers
+- A new condition 'b == 0' was added in function 'divide_numbers'.
+- Statement 'return a / b' moved from line 0 to 1 in function 'divide_numbers'.
+
