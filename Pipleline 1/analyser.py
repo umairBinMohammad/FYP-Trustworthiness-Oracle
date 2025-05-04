@@ -201,6 +201,174 @@ def compare_nodes(old_node: ast.AST, new_node: ast.AST, func_name: str = None) -
                 "new": new_val,
                 "function": func_name
             })
+
+    # Case 8: Function Call Changes
+    if isinstance(old_node, ast.Call) and isinstance(new_node, ast.Call):
+        if ast.dump(old_node.func) != ast.dump(new_node.func):
+            changes.append({
+                "type": "function_call_change",
+                "old": ast.unparse(old_node.func),
+                "new": ast.unparse(new_node.func)
+            })
+        old_args = [ast.unparse(arg) for arg in old_node.args]
+        new_args = [ast.unparse(arg) for arg in new_node.args]
+        if old_args != new_args:
+            changes.append({
+                "type": "function_arguments_change",
+                "old": old_args,
+                "new": new_args
+            })
+
+    # Case 9: Variable Assignment Changes
+    elif isinstance(old_node, ast.Assign) and isinstance(new_node, ast.Assign):
+        old_targets = [ast.unparse(t) for t in old_node.targets]
+        new_targets = [ast.unparse(t) for t in new_node.targets]
+        if old_targets != new_targets:
+            changes.append({
+                "type": "assignment_target_change",
+                "old": old_targets,
+                "new": new_targets
+            })
+        if ast.unparse(old_node.value) != ast.unparse(new_node.value):
+            changes.append({
+                "type": "assignment_value_change",
+                "old": ast.unparse(old_node.value),
+                "new": ast.unparse(new_node.value)
+            })
+
+    # Case 10: If-Condition Changes
+    elif isinstance(old_node, ast.If) and isinstance(new_node, ast.If):
+        if ast.unparse(old_node.test) != ast.unparse(new_node.test):
+            changes.append({
+                "type": "if_condition_change",
+                "old": ast.unparse(old_node.test),
+                "new": ast.unparse(new_node.test)
+            })
+
+    # Case 11: For-Loop Changes
+    elif isinstance(old_node, ast.For) and isinstance(new_node, ast.For):
+        if ast.unparse(old_node.target) != ast.unparse(new_node.target):
+            changes.append({
+                "type": "for_loop_target_change",
+                "old": ast.unparse(old_node.target),
+                "new": ast.unparse(new_node.target)
+            })
+        if ast.unparse(old_node.iter) != ast.unparse(new_node.iter):
+            changes.append({
+                "type": "for_loop_iterable_change",
+                "old": ast.unparse(old_node.iter),
+                "new": ast.unparse(new_node.iter)
+            })
+
+    # Case 12: While-Loop Changes
+    elif isinstance(old_node, ast.While) and isinstance(new_node, ast.While):
+        if ast.unparse(old_node.test) != ast.unparse(new_node.test):
+            changes.append({
+                "type": "while_condition_change",
+                "old": ast.unparse(old_node.test),
+                "new": ast.unparse(new_node.test)
+            })
+
+    # Case 13: Function Definition Changes
+    elif isinstance(old_node, ast.FunctionDef) and isinstance(new_node, ast.FunctionDef):
+        if old_node.name != new_node.name:
+            changes.append({
+                "type": "function_name_change",
+                "old": old_node.name,
+                "new": new_node.name
+            })
+        old_args = [arg.arg for arg in old_node.args.args]
+        new_args = [arg.arg for arg in new_node.args.args]
+        if old_args != new_args:
+            changes.append({
+                "type": "function_arguments_change",
+                "old": old_args,
+                "new": new_args
+            })
+
+    # Case 14: Class Definition Changes
+    elif isinstance(old_node, ast.ClassDef) and isinstance(new_node, ast.ClassDef):
+        if old_node.name != new_node.name:
+            changes.append({
+                "type": "class_name_change",
+                "old": old_node.name,
+                "new": new_node.name
+            })
+        old_bases = [ast.unparse(base) for base in old_node.bases]
+        new_bases = [ast.unparse(base) for base in new_node.bases]
+        if old_bases != new_bases:
+            changes.append({
+                "type": "class_base_change",
+                "old": old_bases,
+                "new": new_bases
+            })
+
+    # Case 15: Return Value Changes
+    elif isinstance(old_node, ast.Return) and isinstance(new_node, ast.Return):
+        if ast.unparse(old_node.value) != ast.unparse(new_node.value):
+            changes.append({
+                "type": "return_value_change",
+                "old": ast.unparse(old_node.value),
+                "new": ast.unparse(new_node.value)
+            })
+
+    # Case 16: Error Handling (Try-Except-Else-Finally)
+    elif isinstance(old_node, ast.Try) and isinstance(new_node, ast.Try):
+        old_handlers = [ast.unparse(h.type) if h.type else "None" for h in old_node.handlers]
+        new_handlers = [ast.unparse(h.type) if h.type else "None" for h in new_node.handlers]
+        if old_handlers != new_handlers:
+            changes.append({
+                "type": "exception_handler_change",
+                "old": old_handlers,
+                "new": new_handlers
+            })
+
+    # Case 18: Decorator Changes
+    elif isinstance(old_node, ast.FunctionDef) and isinstance(new_node, ast.FunctionDef):
+        old_decorators = [ast.unparse(d) for d in old_node.decorator_list]
+        new_decorators = [ast.unparse(d) for d in new_node.decorator_list]
+        if old_decorators != new_decorators:
+            changes.append({
+                "type": "function_decorator_change",
+                "function": old_node.name,
+                "old": old_decorators,
+                "new": new_decorators
+            })
+
+    # Case 19: Docstring Changes
+    elif hasattr(old_node, 'body') and hasattr(new_node, 'body'):
+        if (old_node.body and isinstance(old_node.body[0], ast.Expr) and isinstance(old_node.body[0].value, ast.Constant) and isinstance(old_node.body[0].value.value, str)) and \
+           (new_node.body and isinstance(new_node.body[0], ast.Expr) and isinstance(new_node.body[0].value, ast.Constant) and isinstance(new_node.body[0].value.value, str)):
+            old_docstring = old_node.body[0].value.value
+            new_docstring = new_node.body[0].value.value
+            if old_docstring != new_docstring:
+                changes.append({
+                    "type": "docstring_change",
+                    "old": old_docstring,
+                    "new": new_docstring
+                })
+
+    # Case 20: Attribute Assignment Changes
+    elif isinstance(old_node, ast.Attribute) and isinstance(new_node, ast.Attribute):
+        old_attr = ast.unparse(old_node)
+        new_attr = ast.unparse(new_node)
+        if old_attr != new_attr:
+            changes.append({
+                "type": "attribute_assignment_change",
+                "old": old_attr,
+                "new": new_attr
+            })
+
+    # Case 21: Augmented Assignment Changes
+    elif isinstance(old_node, ast.AugAssign) and isinstance(new_node, ast.AugAssign):
+        old_stmt = ast.unparse(old_node)
+        new_stmt = ast.unparse(new_node)
+        if old_stmt != new_stmt:
+            changes.append({
+                "type": "augmented_assignment_change",
+                "old": old_stmt,
+                "new": new_stmt
+            })
     
     return changes
 
