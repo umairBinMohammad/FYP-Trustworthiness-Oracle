@@ -1,3 +1,6 @@
 [submodule "external/defects4j"]
 	path = external/defects4j
 	url = https://github.com/rjust/defects4j.git
+[submodule "external/bugsinpy"]
+	path = external/bugsinpy
+	url = https://github.com/soarsmu/BugsInPy
