@@ -48,6 +48,7 @@ CLASSPATH (optional but recommended for Defects4J)
     .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar
 
 Click OK to close all dialogs and apply the changes.
+
 3. Add Defects4J to System PATH
 
 Assuming the repository was cloned to C:\Users\YourUsername\YourRepo, and Defects4J is in the external/defects4j subdirectory:
@@ -61,6 +62,7 @@ Assuming the repository was cloned to C:\Users\YourUsername\YourRepo, and Defect
 C:\Users\YourUsername\YourRepo\external\defects4j\framework\bin
 
 (Replace the path with your actual local path to the defects4j/framework/bin directory.)
+
 4. Verify the Setup
 
 Open a new Command Prompt and run:
@@ -77,3 +79,30 @@ Also run:
 `defects4j help`
 
 You should see Defects4J's help text output, confirming the setup was successful.
+
+5. Set Up Python - Required for BugsInPy
+Install Python: Ensure you have Python 3.x installed. You can download it from python.org.
+Add Python to PATH: Make sure Python and Pip are added to your system's PATH environment variable during installation or manually afterwards.
+    Typically, Python installers for Windows have an option "Add Python to PATH".
+    You can verify by opening a new terminal and typing python --version and pip --version.
+
+6. Add BugsInPy to System PATH
+
+Assuming this repository was cloned to C:\YourRepo and BugsInPy is in the C:\YourRepo\external\bugsinpy subdirectory:
+
+    Go back to Environment Variables.
+    Select the Path variable under System variables and click Edit....
+    Click New and add the absolute path to the framework/bin directory of BugsInPy:
+        Example: C:\YourRepo\external\bugsinpy\framework\bin (Replace C:\YourRepo with the actual local path to your repository.)
+
+Click OK on all dialogs to apply the changes.
+
+7. Verify
+
+python --version
+
+Expected output should show Python 3.x.x.
+
+bugsinpy-checkout --help
+
+You should see BugsInPy's help text for the checkout command, confirming it's accessible.
