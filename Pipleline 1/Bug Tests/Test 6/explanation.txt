@@ -1,0 +1,7 @@
+The patch adds explicit validation of the response_model parameter to ensure it's either: None (meaning no response model)
+A valid Python type (for Pydantic model validation). This improves the code by:
+Adding proper type validation early in the initialization. Providing clearer error messages when invalid types are provided
+Maintaining backward compatibility with existing usage. Preventing potential runtime errors from invalid response_model types
+Making the expected types more explicit in the code. The validation helps catch configuration errors early rather than allowing them to surface later during request processing. This is particularly important since response_model is used for:
+OpenAPI schema generation. Response validation. Response serialization. Documentation
+The change aligns with FastAPI's philosophy of catching errors early and providing helpful error messages.
