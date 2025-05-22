@@ -1,0 +1,5 @@
+Processes all routes to extract parameters, request bodies, and responses
+Converts these into OpenAPI-compatible JSON schemas
+Organizes them into the proper OpenAPI structure with paths, components, etc.
+Handles security schemes, callbacks, and other OpenAPI features
+Ensures proper references between schemas using $ref pointers

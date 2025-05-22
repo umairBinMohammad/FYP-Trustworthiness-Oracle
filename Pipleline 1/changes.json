@@ -1,19 +1,80 @@
 {
-  "divide_numbers": [
+  "get_flat_dependant": [
     {
       "type": "condition_added",
-      "condition": "b == 0",
+      "condition": "dependant.cache_key in visited",
       "body": [
-        "raise ValueError('Cannot divide by zero')"
+        "return dependant"
       ],
-      "function": "divide_numbers"
+      "function": "get_flat_dependant"
     },
     {
       "type": "statement_reordered",
-      "statement": "return a / b",
-      "old_position": 0,
-      "new_position": 1,
-      "function": "divide_numbers"
+      "statement": "for sub_dependant in dependant.dependencies:\n    if skip_repeats and sub_dependant.cache_key in visited:\n        continue\n    flat_sub = get_flat_dependant(sub_dependant, skip_repeats=skip_repeats, visited=visited)\n    flat_dependant.path_params.extend(flat_sub.path_params)\n    flat_dependant.query_params.extend(flat_sub.query_params)\n    flat_dependant.header_params.extend(flat_sub.header_params)\n    flat_dependant.cookie_params.extend(flat_sub.cookie_params)\n    flat_dependant.body_params.extend(flat_sub.body_params)\n    flat_dependant.security_requirements.extend(flat_sub.security_requirements)",
+      "old_position": 3,
+      "new_position": 4,
+      "function": "get_flat_dependant"
+    },
+    {
+      "type": "statement_reordered",
+      "statement": "return flat_dependant",
+      "old_position": 4,
+      "new_position": 5,
+      "function": "get_flat_dependant"
+    },
+    {
+      "type": "statement_reordered",
+      "statement": "visited.append(dependant.cache_key)",
+      "old_position": 1,
+      "new_position": 2,
+      "function": "get_flat_dependant"
+    },
+    {
+      "type": "statement_reordered",
+      "statement": "flat_dependant = Dependant(path_params=dependant.path_params.copy(), query_params=dependant.query_params.copy(), header_params=dependant.header_params.copy(), cookie_params=dependant.cookie_params.copy(), body_params=dependant.body_params.copy(), security_requirements=dependant.security_requirements.copy(), use_cache=dependant.use_cache, path=dependant.path)",
+      "old_position": 2,
+      "new_position": 3,
+      "function": "get_flat_dependant"
+    }
+  ],
+  "add_non_field_param_to_dependency": [
+    {
+      "type": "else_block_change",
+      "function": "add_non_field_param_to_dependency"
+    }
+  ],
+  "analyze_param": [
+    {
+      "type": "else_block_change",
+      "function": "analyze_param"
+    },
+    {
+      "type": "else_block_change",
+      "function": "analyze_param"
+    }
+  ],
+  "add_param_to_fields": [
+    {
+      "type": "else_block_change",
+      "function": "add_param_to_fields"
+    }
+  ],
+  "_validate_value_with_model_field": [
+    {
+      "type": "else_block_change",
+      "function": "_validate_value_with_model_field"
+    }
+  ],
+  "_get_multidict_value": [
+    {
+      "type": "else_block_change",
+      "function": "_get_multidict_value"
+    }
+  ],
+  "get_body_field": [
+    {
+      "type": "else_block_change",
+      "function": "get_body_field"
     }
   ]
 }

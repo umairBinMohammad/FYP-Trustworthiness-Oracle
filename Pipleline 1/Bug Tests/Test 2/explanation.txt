@@ -1,0 +1,8 @@
+The patched code enhances Linux distribution detection by improving version parsing for 
+Debian/Ubuntu systems, adding support for newer distributions like Rocky Linux 
+and AlmaLinux, and updating OS family mappings to reflect current ecosystem relationships.
+Key improvements include more robust version number extraction from release files, 
+better handling of distribution variants, and the addition of minor version tracking 
+while maintaining backward compatibility with existing functionality. The changes make 
+the distribution facts more accurate and comprehensive, particularly for modern Linux 
+distributions and edge cases, without breaking existing behavior for older systems or different operating systems.
