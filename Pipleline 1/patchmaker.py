@@ -3,7 +3,7 @@ import os
 import shutil
 import re
 
-openai.api_key = "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"
+openai.api_key = ""
 
 bug_dir = os.path.join("Bug Tests", "Test 1")
 bug_file_path = os.path.join(bug_dir, "bug.py")
