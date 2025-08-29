@@ -3,7 +3,7 @@ import os
 import shutil
 import re
 
-openai.api_key = "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"
+
 folder_path = "Pipleline 1/Bug Tests"
 
 def fix_and_explain_code(buggy_code):
