@@ -15,6 +15,7 @@ def run_script(script_name):
         sys.exit(1)  # Stop further execution if a script fails
 
 if __name__ == "__main__":
+    tests_path = "../Pipeline 1/Bug Tests"
     # Run analyser.py to create changes.json
     run_script("analyser.py")
 

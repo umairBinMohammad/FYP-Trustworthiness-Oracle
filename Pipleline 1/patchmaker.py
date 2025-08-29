@@ -3,14 +3,8 @@ import os
 import shutil
 import re
 
-# openai.api_key = ""
-
-bug_dir = os.path.join("Bug Tests", "Test 1")
-bug_file_path = os.path.join(bug_dir, "bug.py")
-
-# Read buggy code
-with open(bug_file_path, "r", encoding="utf-8") as f:
-    buggy_code = f.read()
+openai.api_key = "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"
+folder_path = "Pipleline 1/Bug Tests"
 
 def fix_and_explain_code(buggy_code):
     prompt = f"""
@@ -41,33 +35,33 @@ def clean_code_block(text):
     text = re.sub(r"^Fixed Code:\s*", "", text, flags=re.IGNORECASE).strip()
     return text
 
-# Get fixed code + explanation
-result = fix_and_explain_code(buggy_code)
+entries = os.scandir(folder_path)
+for entry in entries:
+    in_entries = os.scandir(folder_path + "/" + entry.name)
+    for in_entry in in_entries:
+        # Read buggy code
+        if in_entry.name == "bug.py":
+            with open(folder_path + "/" + entry.name + "/" + in_entry.name, "r", encoding="utf-8") as f:
+                buggy_code = f.read()
+                # Get fixed code + explanation
+                result = fix_and_explain_code(buggy_code)
+                if result == "NO BUGS FOUND":
+                    fixed_code = ""
+                    explanation = "No bugs were found"
+                else: 
+                    fixed_code, explanation = result.split("---EXPLANATION---", 1)
+                    fixed_code = fixed_code.strip()
+                    explanation = explanation.strip()
+                print(explanation)
+                # Clean the code output before saving
+                fixed_code = clean_code_block(fixed_code)
 
-# Prepare output directory (two levels up from Bug Tests/Test 1)
-output_dir = os.path.abspath(os.path.join(bug_dir, "..", ".."))
+                output_dir = folder_path + "/" + entry.name
 
-if result == "NO BUGS FOUND":
-    fixed_code = ""
-    explanation = "No bugs were found"
-else: 
-    fixed_code, explanation = result.split("---EXPLANATION---", 1)
-    fixed_code = fixed_code.strip()
-    explanation = explanation.strip()
+                # Save patch in patch.py
+                with open(output_dir + "/patch.py", "w", encoding="utf-8") as f:
+                    f.write(fixed_code)
 
-print(explanation)
-
-# Clean the code output before saving
-fixed_code = clean_code_block(fixed_code)
-
-# Save patch in patch.py
-patch_file_path = os.path.join(output_dir, "patch.py")
-with open(patch_file_path, "w", encoding="utf-8") as f:
-    f.write(fixed_code)
-
-# Save explanation in explanation.txt
-explanation_file_path = os.path.join(output_dir, "explanation.txt")
-with open(explanation_file_path, "w", encoding="utf-8") as f:
-    f.write(explanation.strip())
-
-print(f"Files created in '{output_dir}':\n- patch.py (fixed code)\n- explanation.txt (explanation)\n- bug.py (original)")
+                # Save explanation in explanation.txt
+                with open(output_dir + "/explanation.txt", "w", encoding="utf-8") as f:
+                    f.write(explanation.strip())
