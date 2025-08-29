@@ -1,1 +1,1 @@
-The original code was subtracting 'b' from 'a' instead of adding them. The function name 'add' suggests that the function should return the sum of 'a' and 'b'. Therefore, the subtraction operator '-' was replaced with the addition operator '+'.
+No bugs were found
