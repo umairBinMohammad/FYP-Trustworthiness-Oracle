@@ -3,7 +3,6 @@ import os
 import shutil
 import re
 
-
 folder_path = "Pipleline 1/Bug Tests"
 
 def fix_and_explain_code(buggy_code):
