@@ -1,6 +1,10 @@
+import os
 import ast
 import json
 from typing import Dict, List
+
+# Change working directory to main
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def parse_code_to_ast(filepath: str) -> ast.AST:
     """Parse a Python file into an AST."""

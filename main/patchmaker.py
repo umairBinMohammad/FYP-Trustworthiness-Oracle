@@ -1,9 +1,8 @@
 import openai
-import os
-import shutil
 import re
 
-folder_path = "Pipleline 1/Bug Tests"
+OPENAI_API_KEY = "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"
+openai.api_key = OPENAI_API_KEY
 
 def fix_and_explain_code(buggy_code):
     prompt = f"""
@@ -25,7 +24,6 @@ def fix_and_explain_code(buggy_code):
 
     return response.choices[0].message["content"]
 
-# Clean up code output
 def clean_code_block(text):
     # Remove triple backticks and language tags
     text = re.sub(r"^```(?:python)?", "", text, flags=re.MULTILINE).strip()
@@ -33,34 +31,3 @@ def clean_code_block(text):
     # Remove any leading 'Fixed Code:' label
     text = re.sub(r"^Fixed Code:\s*", "", text, flags=re.IGNORECASE).strip()
     return text
-
-entries = os.scandir(folder_path)
-for entry in entries:
-    in_entries = os.scandir(folder_path + "/" + entry.name)
-    for in_entry in in_entries:
-        # Read buggy code
-        if in_entry.name == "bug.py":
-            with open(folder_path + "/" + entry.name + "/" + in_entry.name, "r", encoding="utf-8") as f:
-                buggy_code = f.read()
-                # Get fixed code + explanation
-                result = fix_and_explain_code(buggy_code)
-                if result == "NO BUGS FOUND":
-                    fixed_code = ""
-                    explanation = "No bugs were found"
-                else: 
-                    fixed_code, explanation = result.split("---EXPLANATION---", 1)
-                    fixed_code = fixed_code.strip()
-                    explanation = explanation.strip()
-                print(explanation)
-                # Clean the code output before saving
-                fixed_code = clean_code_block(fixed_code)
-
-                output_dir = folder_path + "/" + entry.name
-
-                # Save patch in patch.py
-                with open(output_dir + "/patch.py", "w", encoding="utf-8") as f:
-                    f.write(fixed_code)
-
-                # Save explanation in explanation.txt
-                with open(output_dir + "/explanation.txt", "w", encoding="utf-8") as f:
-                    f.write(explanation.strip())
