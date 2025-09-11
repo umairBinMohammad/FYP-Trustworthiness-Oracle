@@ -1,9 +1,6 @@
 import openai
 import re
 
-# OPENAI_API_KEY = "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"
-# openai.api_key = OPENAI_API_KEY
-
 def fix_and_explain_code(buggy_code):
     prompt = f"""
     You are a senior software engineer.
