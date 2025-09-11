@@ -6,12 +6,9 @@ import sys
 def run_script(script_name):
     """Runs a Python script using subprocess."""
     script_path = os.path.join(os.path.dirname(__file__), script_name)
-    print(f"▶️ Running {script_name}...")
     try:
         subprocess.run(["python", script_path], check=True)
-        print(f"✅ {script_name} finished successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"❌ {script_name} failed with exit code {e.returncode}")
         sys.exit(1)  # Stop further execution if a script fails
 
 if __name__ == "__main__":
