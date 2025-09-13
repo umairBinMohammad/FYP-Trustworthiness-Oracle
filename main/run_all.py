@@ -6,7 +6,7 @@ import shutil
 
 MAIN_PATH = os.path.dirname(os.path.abspath(__file__))
 EXTERNAL_PATH = os.path.abspath(os.path.join(MAIN_PATH, "..", "external"))
-ALL_BUGS_ROOT = os.path.join(EXTERNAL_PATH, "all_bugs")
+ALL_BUGS_ROOT = os.path.join(MAIN_PATH, "all_bugs")
 BUGSINPY_ROOT = os.path.join(EXTERNAL_PATH, "bugsinpy", "projects")
 
 def run_script(script_name):
