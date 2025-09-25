@@ -1,0 +1,97 @@
+# Import the necessary classes from the transformers library.
+# The AutoModelForCausalLM class is used to load a language model,
+# and AutoTokenizer is used to load the corresponding tokenizer.
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+import re
+
+# The name of the model on Hugging Face. This identifies the specific
+# model and version to be loaded.
+model_name = "Qwen/Qwen2.5-32B-Instruct"
+
+# Load the model from the specified name.
+# These variables will be loaded only once when the module is first imported.
+print("Loading Qwen model...")
+try:
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        torch_dtype="auto",
+        device_map="auto",
+        trust_remote_code=True
+    )
+    print("Model loaded.")
+except Exception as e:
+    print(f"Error loading model: {e}")
+    model = None
+
+# Load the tokenizer.
+print("Loading tokenizer...")
+try:
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    print("Tokenizer loaded.")
+except Exception as e:
+    print(f"Error loading tokenizer: {e}")
+    tokenizer = None
+
+
+def fix_and_explain_code(buggy_code):
+    """
+    Analyzes, fixes, and explains a bug in a given code snippet using the
+    locally loaded Qwen model.
+    """
+    # Check if the model was loaded successfully
+    if not model or not tokenizer:
+        return "ERROR: Model or tokenizer failed to load."
+
+    prompt = f"""
+You are a senior software engineer.
+The following code has a bug.
+1. Provide only the fixed code without extra explanation.
+2. Provide a detailed explanation of what was changed (after the fixed code, separated by a delimiter '---EXPLANATION---').
+3. If no bugs were found, the explanation should be "NO BUGS FOUND".
+
+Code:
+{buggy_code}
+"""
+    # Define the conversation for the Qwen model
+    messages = [
+        {"role": "system", "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."},
+        {"role": "user", "content": prompt}
+    ]
+
+    # Apply the chat template to format the prompt for the model
+    text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+
+    # Tokenize the formatted text and move to the model's device
+    model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
+    # Generate the response from the model
+    generated_ids = model.generate(
+        **model_inputs,
+        max_new_tokens=512,
+        do_sample=True,
+        temperature=0.7,
+        top_p=0.95
+    )
+    
+    # Decode the generated token IDs into a string
+    input_ids_len = model_inputs.input_ids.shape[1]
+    generated_ids = generated_ids[0][input_ids_len:]
+    response = tokenizer.decode(generated_ids, skip_special_tokens=True)
+
+    return response
+
+def clean_code_block(text):
+    """
+    Cleans up the generated text to extract the code block.
+    """
+    # Remove triple backticks and language tags
+    text = re.sub(r"^```(?:python)?", "", text, flags=re.MULTILINE).strip()
+    text = re.sub(r"```$", "", text, flags=re.MULTILINE).strip()
+    # Remove any leading 'Fixed Code:' label
+    text = re.sub(r"^Fixed Code:\s*", "", text, flags=re.IGNORECASE).strip()
+    return text
