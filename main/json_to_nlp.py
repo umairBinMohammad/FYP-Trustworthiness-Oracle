@@ -24,11 +24,6 @@ def to_natural_language(change: dict) -> str:
     else:
         return f"Change of type '{ctype}' detected."
 
-# # Convert and print
-# for func, func_changes in changes.items():
-#     print(f"\nFunction: {func}")
-#     for change in func_changes:
-#         print(" -", to_natural_language(change))
 
 def convert_json_to_nlp(json_file: str, output_file: str):
     with open(json_file) as f:

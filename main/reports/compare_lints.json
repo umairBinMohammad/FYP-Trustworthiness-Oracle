@@ -1,0 +1,6 @@
+{
+  "pylint_delta": 0,
+  "bandit_delta": 0,
+  "semgrep_delta": 0,
+  "trustworthy": true
+}

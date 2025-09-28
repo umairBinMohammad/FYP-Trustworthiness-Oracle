@@ -10,6 +10,8 @@ import contextlib
 import sys
 import os
 
+
+
 @contextlib.contextmanager
 def suppress_output():
     with open(os.devnull, 'w') as fnull:
@@ -76,7 +78,7 @@ def compare_with_models(explanation_file, nlp_file):
             nlp_embed = model.encode(nlp_summary, convert_to_tensor=True)
             # Cosine similarity
             score = util.pytorch_cos_sim(expl_embed, nlp_embed).item()
-            print(f"→ [{model_name}]: Semantic Match Score: {score:.2f} | {'✅ Match' if score >= 0.6 else '❌ No Match'}")
+            print(f"→ [{model_name}]: Semantic Match Score: {score:.2f} | {'Trustworthy' if score >= 0.6 else 'Untrustworthy'}")
         except Exception as e:
             print(f"⚠️ Error using model '{model_name}': {e}")
 

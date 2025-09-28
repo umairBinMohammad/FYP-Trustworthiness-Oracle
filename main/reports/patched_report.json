@@ -1,0 +1,153 @@
+{
+  "pylint": [
+    {
+      "type": "convention",
+      "module": "code2",
+      "obj": "",
+      "line": 2,
+      "column": 0,
+      "endLine": null,
+      "endColumn": null,
+      "path": "code2.py",
+      "symbol": "missing-final-newline",
+      "message": "Final newline missing",
+      "message-id": "C0304"
+    },
+    {
+      "type": "convention",
+      "module": "code2",
+      "obj": "",
+      "line": 1,
+      "column": 0,
+      "endLine": null,
+      "endColumn": null,
+      "path": "code2.py",
+      "symbol": "missing-module-docstring",
+      "message": "Missing module docstring",
+      "message-id": "C0114"
+    },
+    {
+      "type": "convention",
+      "module": "code2",
+      "obj": "add",
+      "line": 1,
+      "column": 0,
+      "endLine": 1,
+      "endColumn": 7,
+      "path": "code2.py",
+      "symbol": "missing-function-docstring",
+      "message": "Missing function or method docstring",
+      "message-id": "C0116"
+    }
+  ],
+  "pylint_issues": 3,
+  "bandit": {
+    "errors": [],
+    "generated_at": "2025-09-28T19:29:32Z",
+    "metrics": {
+      ".\\code2.py": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 2,
+        "nosec": 0,
+        "skipped_tests": 0
+      },
+      "_totals": {
+        "CONFIDENCE.HIGH": 0,
+        "CONFIDENCE.LOW": 0,
+        "CONFIDENCE.MEDIUM": 0,
+        "CONFIDENCE.UNDEFINED": 0,
+        "SEVERITY.HIGH": 0,
+        "SEVERITY.LOW": 0,
+        "SEVERITY.MEDIUM": 0,
+        "SEVERITY.UNDEFINED": 0,
+        "loc": 2,
+        "nosec": 0,
+        "skipped_tests": 0
+      }
+    },
+    "results": []
+  },
+  "bandit_issues": 0,
+  "semgrep": {
+    "version": "1.132.1",
+    "results": [],
+    "errors": [],
+    "paths": {
+      "scanned": [
+        "code2.py"
+      ]
+    },
+    "time": {
+      "rules": [],
+      "rules_parse_time": 1.294424057006836,
+      "profiling_times": {
+        "config_time": 1.1837489604949951,
+        "core_time": 1.808772325515747,
+        "ignores_time": 0.0016880035400390625,
+        "total_time": 2.995725393295288
+      },
+      "parsing_time": {
+        "total_time": 0.0056231021881103516,
+        "per_file_time": {
+          "mean": 0.0056231021881103516,
+          "std_dev": 0.0
+        },
+        "very_slow_stats": {
+          "time_ratio": 0.0,
+          "count_ratio": 0.0
+        },
+        "very_slow_files": []
+      },
+      "scanning_time": {
+        "total_time": 0.02427506446838379,
+        "per_file_time": {
+          "mean": 0.00809168815612793,
+          "std_dev": 0.00013095083443204203
+        },
+        "very_slow_stats": {
+          "time_ratio": 0.0,
+          "count_ratio": 0.0
+        },
+        "very_slow_files": []
+      },
+      "matching_time": {
+        "total_time": 0.0009312629699707031,
+        "per_file_and_rule_time": {
+          "mean": 0.0003104209899902344,
+          "std_dev": 1.9272238205303438e-07
+        },
+        "very_slow_stats": {
+          "time_ratio": 0.0,
+          "count_ratio": 0.0
+        },
+        "very_slow_rules_on_files": []
+      },
+      "tainting_time": {
+        "total_time": 0.0,
+        "per_def_and_rule_time": {
+          "mean": 0.0,
+          "std_dev": 0.0
+        },
+        "very_slow_stats": {
+          "time_ratio": 0.0,
+          "count_ratio": 0.0
+        },
+        "very_slow_rules_on_defs": []
+      },
+      "fixpoint_timeouts": [],
+      "targets": [],
+      "total_bytes": 0,
+      "max_memory_bytes": 1102265664
+    },
+    "engine_requested": "OSS",
+    "skipped_rules": []
+  },
+  "semgrep_issues": 0
+}
