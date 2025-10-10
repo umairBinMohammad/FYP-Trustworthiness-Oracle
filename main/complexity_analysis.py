@@ -47,7 +47,7 @@ def compare_complexity(original, patched):
     # If MI dropped significantly (> 30 points), or complexity increased too much
     if mi_patched < mi_original - 30:
         decision = "Untrustworthy"
-    elif cc_patched > cc_original + 1:  
+    elif cc_patched > cc_original + 3:  
         decision = "Untrustworthy"
 
     return {
